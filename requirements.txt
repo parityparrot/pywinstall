@@ -1,0 +1,9 @@
+altgraph==0.16.1
+future==0.17.1
+macholib==1.11
+pefile==2019.4.18
+pyftdi==0.29.4
+PyInstaller==3.4
+pyserial==3.4
+pyusb==1.0.2
+pywin32-ctypes==0.2.0
