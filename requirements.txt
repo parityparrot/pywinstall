@@ -1,9 +1,14 @@
 altgraph==0.16.1
+cffi==1.12.3
 future==0.17.1
 macholib==1.11
+numpy==1.16.3
 pefile==2019.4.18
+pycparser==2.19
 pyftdi==0.29.4
 PyInstaller==3.4
 pyserial==3.4
 pyusb==1.0.2
 pywin32-ctypes==0.2.0
+sounddevice==0.3.13
+SoundFile==0.10.2
