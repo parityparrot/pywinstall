@@ -1,6 +1,6 @@
 # PyWinstall
 
-Windows installer for FTDI device.
+Windows installer for FTDI device and sound playback.
 
 Driver files are copied from `inno-setup/driver/` and obtained from the libusb-win32 
 [source](https://sourceforge.net/p/libusb-win32/wiki/Home/).
