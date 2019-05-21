@@ -17,3 +17,15 @@ The installer was compiled using [Inno Setup](http://www.jrsoftware.org/isinfo.p
 Rename `python-3.7.3.amd64` to `python37` and add it to the root directory of this project.
 
 1. Run `start-env.bat` to start up the virtual envrionment.
+
+## Build
+
+1. Run `build.bat` to build the executable.
+
+2. Create the setup installer with Inno Setup by compiling `setup.iss`.
+
+## TODO
+
+- [ ] Automate compilation for setup installer.
+
+- [ ] Revisit installing packages with winpython and virtualenv.
