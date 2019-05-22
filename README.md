@@ -2,7 +2,7 @@
 
 Windows installer for FTDI device and sound playback.
 
-Driver files are copied from `inno-setup/driver/` and obtained from the libusb-win32 
+Driver files are copied from `inno-setup\driver\` and obtained from the libusb-win32 
 [source](https://sourceforge.net/p/libusb-win32/wiki/Home/).
 
 The executable was built using [pyinstaller](https://www.pyinstaller.org/). 
@@ -16,11 +16,11 @@ The installer was compiled using [Inno Setup](http://www.jrsoftware.org/isinfo.p
 0. (Prereq) Download [winpython](https://winpython.github.io/) 3.7. 
 Rename `python-3.7.3.amd64` to `python37` and add it to the root directory of this project.
 
-1. Run `start-env.bat` to start up the virtual envrionment.
+1. Run `resources\scripts\start-env.bat` to start up the virtual envrionment.
 
 ## Build
 
-1. Run `build.bat` to build the executable.
+1. Run `resources\scripts\build.bat` to build the executable.
 
 2. Create the setup installer with Inno Setup by compiling `setup.iss`.
 

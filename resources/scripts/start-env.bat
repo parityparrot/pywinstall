@@ -1,15 +1,14 @@
 @echo off
 
-set PATH=%PATH%;.\python37\;.\python37\Scripts\
+set pypath=.\python37\
+set pyscripts=.\python37\Scripts\
+
+call add-path pypath
+call add-path pyscripts
 
 if not exist .\venv\ (
     :: Handle `Command "python setup.py egg_info" failed with error code 3221225781`
-    if not exist .\python37\Scripts\pyinstaller.exe (
-        pip install pyinstaller
-    )
-    if not exist .\python37\Scripts\virtualenv.exe (
-        pip install virtualenv
-    )
+    pip install virtualenv pyinstaller sounddevice soundfile
     virtualenv venv
     .\venv\Scripts\activate
     pip install -r requirements.txt

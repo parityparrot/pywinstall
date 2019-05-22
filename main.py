@@ -8,13 +8,23 @@ import sounddevice as sd
 import soundfile as sf
 from pyftdi.i2c import I2cController
 
+"""[summary]
+"""
 
 def int_handler(*args):
+    """[summary]
+    """
     for task in asyncio.Task.all_tasks():
         task.cancel()
 
 
 async def play_file(buffer):
+    """[summary]
+    
+    :param buffer: [description]
+    :type buffer: [type]
+    :raises sd.CallbackStop: [description]
+    """
     loop = asyncio.get_event_loop()
     event = asyncio.Event()
     idx = 0
@@ -39,6 +49,11 @@ async def play_file(buffer):
 
 
 async def main(filename):
+    """[summary]
+    
+    :param filename: [description]
+    :type filename: [type]
+    """
     buffer, sr = sf.read(filename, dtype='float32')
     if not np.allclose(buffer.shape, (len(buffer),2)):
         buffer = np.c_[
