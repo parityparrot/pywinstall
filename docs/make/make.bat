@@ -7,8 +7,8 @@ pushd %~dp0
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
-set SOURCEDIR=source
-set BUILDDIR=build
+set SOURCEDIR=../source
+set BUILDDIR=../build
 
 if "%1" == "" goto help
 
@@ -26,6 +26,7 @@ if errorlevel 9009 (
 )
 
 %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+robocopy /s ..\build\html\ ../ /it /nfl /ndl /njh /njs /nc /ns /np /xf objects.inv .buildinfo
 goto end
 
 :help
