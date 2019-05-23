@@ -8,22 +8,30 @@ import sounddevice as sd
 import soundfile as sf
 from pyftdi.i2c import I2cController
 
-"""[summary]
-"""
 
 def int_handler(*args):
-    """[summary]
+    """`SIGINT` and `SIGTERM` interrupt handler that cancels all 
+    :raw-html:`<a href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task.cancel" 
+    target="_blank"><code style="color:#E74C3C">asyncio</code></a>` tasks.
     """
     for task in asyncio.Task.all_tasks():
         task.cancel()
 
 
-async def play_file(buffer):
-    """[summary]
+async def play_file(buffer, device):
+    """Asynchronously plays input sound buffer.
     
-    :param buffer: [description]
-    :type buffer: [type]
-    :raises sd.CallbackStop: [description]
+    :param buffer: Input sound buffer used by 
+        :raw-html:`<a href="https://python-sounddevice.readthedocs.io/en/0.3.12/api.html?highlight=outputstream#sounddevice.OutputStream" 
+        target="_blank"><code style="color:#E74C3C">sounddevice.OutpuSttream</code></a>`.
+    :type buffer: :raw-html:`<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html" 
+        target="_blank"><i>numpy.ndarray</i></a>`
+    :param device: Output sound device number.
+    :type device: int
+    :raises sd.CallbackStop: Exception to be raised by the user to abort callback processing. 
+        All pending buffers are discarded and the callback will not be invoked anymore.
+        See :raw-html:`<a href="https://python-sounddevice.readthedocs.io/en/0.3.12/api.html?highlight=outputstream#sounddevice.CallbackStop" 
+        target="_blank"><code style="color:#E74C3C">sounddevice.CallbackStop</code></a>`.
     """
     loop = asyncio.get_event_loop()
     event = asyncio.Event()
@@ -42,17 +50,20 @@ async def play_file(buffer):
         outdata[valid_frames:] = 0
         idx += valid_frames
     
-    # TODO: device
-    stream = sd.OutputStream(callback=callback, dtype='float32', channels=2, samplerate=32100)
+    stream = sd.OutputStream(callback=callback, dtype='float32', channels=2, samplerate=32100, device=device)
     with stream:
         await event.wait()
 
 
-async def main(filename):
-    """[summary]
+async def main(filename, device=1):
+    """Transforms input `.wav` file to a :raw-html:`<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html" 
+    target="_blank"><code style="color:#E74C3C">numpy.ndarray</code></a>` object for sound buffer.
+    Calls :py:meth:`main.play_file` with the sound buffer.
     
-    :param filename: [description]
-    :type filename: [type]
+    :param filename: The file name of the sound file.
+    :type filename: str
+    :param device: The device number of the output sound source, defaults to 1.
+    :type device: int, optional
     """
     buffer, sr = sf.read(filename, dtype='float32')
     if not np.allclose(buffer.shape, (len(buffer),2)):
@@ -60,7 +71,7 @@ async def main(filename):
             buffer if np.allclose(buffer.shape, (len(buffer),1)) else np.reshape(buffer, (len(buffer)),1),
             buffer if np.allclose(buffer.shape, (len(buffer),1)) else np.reshape(buffer, (len(buffer)),1)
         ]
-    play_task = asyncio.ensure_future(play_file(buffer))
+    play_task = asyncio.ensure_future(play_file(buffer, device))
     for i in [float(j) / 100*(len(buffer)/sr) for j in range(0, 100, 1)]:
         await asyncio.sleep((len(buffer)/sr)/100)
     if not play_task.done():
@@ -68,23 +79,25 @@ async def main(filename):
 
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser(description="Simple sound player")
     parser.add_argument('-f', '--filename', dest='filename', help=".wav filename", type=str)
+    parser.add_argument('-d', '--dev-no', dest='dev_no', help="device number", type=int)
     parser.add_argument('-l', '--list-devices', action='store_true', help='list connected FTDI devices')
     args = parser.parse_args()
 
     i2c = I2cController()
     if args.list_devices:
-        out_devs = sd.query_devices(kind='output')
+        out_devs = sd.query_devices()
         if out_devs is None:
             print('No output sound devices')
         else:
-            if not isinstance(out_devs, list):
-                out_devs = [out_devs]
-            for out_dev in out_devs:
-                out_dev['dev_no'] = out_dev['hostapi']+1
+            devices = []
+            for dno, out_dev in enumerate(out_devs):
+                out_dev['dev_no'] = dno
+                devices.append(out_dev)
             print('Output sound devices:')
-            print(json.dumps(out_devs, indent=2))
+            print(json.dumps(devices, indent=2))
             print('')
 
         i2c.configure('ftdi:///?')
@@ -106,7 +119,10 @@ if __name__ == "__main__":
     signal.signal(signal.SIGTERM, int_handler)
 
     try:
-        loop.run_until_complete(asyncio.gather(main(args.filename)))
+        if args.dev_no is None:
+            loop.run_until_complete(asyncio.gather(main(args.filename)))
+        else:
+            loop.run_until_complete(asyncio.gather(main(args.filename, args.dev_no)))
     except asyncio.CancelledError:
         pass
     finally:

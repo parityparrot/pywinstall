@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Setup &mdash; PyWinstall 0.0.1 documentation</title>
+  <title>Setup &mdash; PyWinstall 0.0.2 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Build" href="build.html" />
+    <link rel="next" title="Usage" href="usage.html" />
     <link rel="prev" title="PyWinstall documentation" href="index.html" /> 
 </head>
 
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.1
+                0.0.2
               </div>
             
           
@@ -86,10 +86,14 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="build.html">Build</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#considerations">Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preparing-your-workspace">Preparing your workspace</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="main.html">PyWince Executable</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installer.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Build</a></li>
 </ul>
 
             
@@ -156,6 +160,23 @@
             
   <div class="section" id="setup">
 <h1>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="considerations">
+<h2>Considerations<a class="headerlink" href="#considerations" title="Permalink to this headline">¶</a></h2>
+<p>The project uses <span class="raw-html"><a href="https://eblot.github.io/pyftdi/" target="_blank">PyFtdi</a></span>, which requires Python 3.5 or newer.</p>
+<p>This project assumes you have <span class="raw-html"><a href="https://winpython.github.io/" target="_blank">WinPython</a></span>.
+After extracting the WinPython files, rename <cite>python-3.x.y.amd64\</cite> to <cite>python3x\</cite> at the project root, where <cite>x</cite> is the version of Python 3.</p>
+<p>If you are not using Python 3.7, rename <code class="code docutils literal notranslate"><span class="pre">start-env.bat</span></code> in <cite>resources\scripts\</cite> accordingly.</p>
+</div>
+<div class="section" id="preparing-your-workspace">
+<h2>Preparing your workspace<a class="headerlink" href="#preparing-your-workspace" title="Permalink to this headline">¶</a></h2>
+<p>Simply run <code class="code docutils literal notranslate"><span class="pre">start-env.bat</span></code> in <cite>resources\scripts\</cite>.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">start-env.bat</span></code> script performs the following actions:</p>
+<ul class="simple">
+<li><p>Adds the paths for <cite>python.exe</cite>, <cite>pip.exe</cite> are other executables installed by pip into the the <cite>PATH</cite> environment variable.</p></li>
+<li><p>Creates a virtual environment if it does not yet exist.</p></li>
+<li><p>Installs Python dependencies from the <code class="code docutils literal notranslate"><span class="pre">requirements.txt</span></code> file.</p></li>
+</ul>
+</div>
 </div>
 
 
@@ -166,7 +187,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="build.html" class="btn btn-neutral float-right" title="Build" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral float-left" title="PyWinstall documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

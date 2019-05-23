@@ -16,16 +16,22 @@ The installer was compiled using [Inno Setup](http://www.jrsoftware.org/isinfo.p
 0. (Prereq) Download [winpython](https://winpython.github.io/) 3.7. 
 Rename `python-3.7.3.amd64` to `python37` and add it to the root directory of this project.
 
-1. Run `resources\scripts\start-env.bat` to start up the virtual envrionment.
+1. Run `start-env.bat` in `resources\scripts\` to start up the virtual envrionment.
 
 ## Build
 
-1. Run `resources\scripts\build.bat` to build the executable.
+1. Run `build.bat` in `resources\scripts\` to build the executable.
 
-2. Create the setup installer with Inno Setup by compiling `setup.iss`.
+## Running
+
+0. (Prereq) Make sure libusbK driver is installed.
+
+1. Run `pywince.exe` either from Program Files folder or the output `dist/` folder. To see all options, run with the `-h` or `--help` flag.
 
 ## TODO
 
-- [ ] Automate compilation for setup installer.
+- [x] Automate compilation for setup installer.
 
-- [ ] Revisit installing packages with winpython and virtualenv.
+- [x] Revisit installing packages with winpython and virtualenv.
+
+- [ ] Make `raw-html` globally available.

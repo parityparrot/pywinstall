@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PyWince Executable &mdash; PyWinstall 0.0.1 documentation</title>
+  <title>PyWince Executable &mdash; PyWinstall 0.0.2 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation" href="installer.html" />
-    <link rel="prev" title="Build" href="build.html" /> 
+    <link rel="next" title="Build" href="build.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.1
+                0.0.2
               </div>
             
           
@@ -87,9 +87,9 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="build.html">Build</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">PyWince Executable</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installer.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Build</a></li>
 </ul>
 
             
@@ -156,34 +156,51 @@
             
   <div class="section" id="pywince-executable">
 <h1>PyWince Executable<a class="headerlink" href="#pywince-executable" title="Permalink to this headline">¶</a></h1>
-<p>[summary]</p>
+<p>Plays <cite>.wav</cite> files and lists connected sound input/output devices as well as
+connected <span class="raw-html"><a href="https://www.ftdichip.com/USB.html" target="_blank">FTDI</a></span> USB devices.</p>
 <span class="target" id="module-main"></span><dl class="function">
 <dt id="main.int_handler">
 <code class="descclassname">main.</code><code class="descname">int_handler</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#main.int_handler" title="Permalink to this definition">¶</a></dt>
-<dd><p>[summary]</p>
+<dd><p><cite>SIGINT</cite> and <cite>SIGTERM</cite> interrupt handler that cancels all 
+<span class="raw-html"><a href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task.cancel" 
+target="_blank"><code style="color:#E74C3C">asyncio</code></a></span> tasks.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="main.main">
-<code class="descclassname">main.</code><code class="descname">main</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#main.main" title="Permalink to this definition">¶</a></dt>
-<dd><p>[summary]</p>
+<code class="descclassname">main.</code><code class="descname">main</code><span class="sig-paren">(</span><em>filename</em>, <em>device=1</em><span class="sig-paren">)</span><a class="headerlink" href="#main.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms input <cite>.wav</cite> file to a <span class="raw-html"><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html" 
+target="_blank"><code style="color:#E74C3C">numpy.ndarray</code></a></span> object for sound buffer.
+Calls <a class="reference internal" href="#main.play_file" title="main.play_file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">main.play_file()</span></code></a> with the sound buffer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>filename</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – The file name of the sound file.</p></li>
+<li><p><strong>device</strong> (<em>int</em><em>, </em><em>optional</em>) – The device number of the output sound source, defaults to 1.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="main.play_file">
-<code class="descclassname">main.</code><code class="descname">play_file</code><span class="sig-paren">(</span><em>buffer</em><span class="sig-paren">)</span><a class="headerlink" href="#main.play_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>[summary]</p>
+<code class="descclassname">main.</code><code class="descname">play_file</code><span class="sig-paren">(</span><em>buffer</em>, <em>device</em><span class="sig-paren">)</span><a class="headerlink" href="#main.play_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asynchronously plays input sound buffer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>buffer</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffer</strong> (<span class="raw-html"><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html" 
+target="_blank"><i>numpy.ndarray</i></a></span>) – Input sound buffer used by 
+<span class="raw-html"><a href="https://python-sounddevice.readthedocs.io/en/0.3.12/api.html?highlight=outputstream#sounddevice.OutputStream" 
+target="_blank"><code style="color:#E74C3C">sounddevice.OutpuSttream</code></a></span>.</p></li>
+<li><p><strong>device</strong> (<em>int</em>) – Output sound device number.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>sd.CallbackStop</strong> – [description]</p>
+<dd class="field-even"><p><strong>sd.CallbackStop</strong> – Exception to be raised by the user to abort callback processing. 
+All pending buffers are discarded and the callback will not be invoked anymore.
+See <span class="raw-html"><a href="https://python-sounddevice.readthedocs.io/en/0.3.12/api.html?highlight=outputstream#sounddevice.CallbackStop" 
+target="_blank"><code style="color:#E74C3C">sounddevice.CallbackStop</code></a></span>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -198,10 +215,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="installer.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="build.html" class="btn btn-neutral float-right" title="Build" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="build.html" class="btn btn-neutral float-left" title="Build" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

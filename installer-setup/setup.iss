@@ -4,7 +4,7 @@
 #include "environment.iss"
 
 #define MyAppName "PyWinstall"
-#define MyAppVersion "0.0.1"
+#define MyAppVersion "0.0.2"
 #define MyAppPublisher "Parity Parrot"
 #define MyAppURL "https://www.parityparrot.com/"
 #define MyAppExeName "main.exe"
@@ -68,9 +68,11 @@ end;
 [Tasks]
 Name: "install_usb"; Description: "Install USB driver";
 Name: envPath; Description: "Add to PATH variable (You will need to restart for this to take effect)" 
+Name: "open_docs"; Description: "Show documentation";
 
 [Run]
 Filename: "{app}\driver\dpinst64.exe"; Parameters: "/c /q /se /sw"; StatusMsg: "Installing driver (this may take a few seconds) ..."; Tasks: install_usb; Flags: skipifsilent
+Filename: "https://parityparrot.github.io/pywinstall/"; Tasks: open_docs; Flags: shellexec runasoriginaluser
 
 [UninstallDelete]
 Type: files; Name: "{sys}\libusb0.dll"

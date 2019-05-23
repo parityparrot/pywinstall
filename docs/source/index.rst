@@ -6,9 +6,9 @@ PyWinstall documentation
    :caption: Contents:
 
    setup
-   build
+   usage
    main
-   installer
+   build
 
 * :ref:`modindex`
 * :ref:`search`
